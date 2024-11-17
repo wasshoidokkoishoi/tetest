@@ -1,0 +1,984 @@
+@charset "UTF-8";
+
+/* リセットCSS */
+/* リセットCSSのライセンス表記 */
+/* 
+Copyright (c) 2021 Elad Shechter - https://github.com/elad2412/the-new-css-reset
+Released under the MIT license
+https://opensource.org/license/mit/
+*/
+*:where(:not(html,iframe,canvas,img,svg,video,audio):not(svg *,symbol *)){all:unset;display:revert}*,*::before,*::after{box-sizing:border-box}a,button{cursor:revert}ol,ul,menu,summary{list-style:none}img{max-inline-size:100%;max-block-size:100%}table{border-collapse:collapse}input,textarea{-webkit-user-select:auto}textarea{white-space:revert}meter{-webkit-appearance:revert;appearance:revert}:where(pre){all:revert;box-sizing:border-box}::placeholder{color:unset}:where([hidden]){display:none}:where([contenteditable]:not([contenteditable="false"])){-moz-user-modify:read-write;-webkit-user-modify:read-write;overflow-wrap:break-word;-webkit-line-break:after-white-space;-webkit-user-select:auto}:where([draggable="true"]){-webkit-user-drag:element}:where(dialog:modal){all:revert;box-sizing:border-box}
+/* リセットCSSここまで */
+
+
+/* キーボード操作時にフォーカスリング表示 */
+:where(:focus-visible) {
+    outline: revert;
+}
+
+/* imgタグの隙間発生を防止 */
+:where(img) {
+    vertical-align: bottom;
+}
+
+/* 変数管理 */
+:root {
+    --white: #fff;
+    --gray: rgb(0 0 0 / 0.05);
+    --red: #e81a35;
+    --text-color: #222;    /* フォントの色 */
+    --background-color: rgb(255 255 255 / 0.96);    /* 背景色 */
+    --link-color: rgb(78 138 140);    /* リンクの色 */
+    --link-visited-color: rgb(118 118 118);    /* 訪問済みリンクの色 */
+    --hr-border-color: #ccc;    /* hr の枠線の色 */
+    --button-border-color: #666;    /* 入力欄の枠線の色 */
+    --main-color:darkslategrey;    /* メインカラー */
+    --main-color-t: rgb(78 138 140 / 0.2);    /* メインカラーの透過 */
+    --nav-background-color: rgb(255 255 255 / 0.9);    /* nav の背景色 */
+    --nav-shadow-color: rgb(0 0 0 / 0.1);    /* navの影の色 */
+
+    --height: 2.5em;    /* input、select等の高さ */
+    --width-set: 11.5em;    /* input、select等の長さ */
+    --margin-right: 6px;    /* input、select等の右側のmargin */
+}
+
+body {
+    font-family: "Poiret One", sans-serif;    /* フォントの種類 */
+    font-size: clamp(12px, 3.75vw, 1rem);    /* フォントサイズを「12px以上1rem以下の3.75vw」にしています。お好みで変更してください。 */
+    line-height: 1.8;    /* 行の高さ */
+    letter-spacing: 0.05em;    /* 文字と文字の間隔 */
+    text-align: left;    /* 左寄せ */
+    line-break: strict;    /* 強い禁則処理(通常はnormal) */
+    overflow-wrap: break-word;    /* 長い英単語がはみ出さないように改行 */
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;    /* 文字サイズの自動調整を制御 */
+    color: var(--text-color);    /* 文字色 */
+    background-color: var(--gray);    /* 背景色 */
+    position: relative;
+}
+
+.parallax-bg {
+    position: fixed;    /* 通常の背景画像にしたいときは position: absolute; に変更。背景画像を固定する場合は変更しない */
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;   /* 背景画像を固定する場合は height: 100vh; に変更 */
+    background-image: url('leaves-8724660_1280.jpg');  /* 背景画像 */
+    background-size: min(100vw, 500px) min(100vw, 500px); /* 横と縦の両方とも100vw、ただし500px以下 という指定にしている。画像によってここのピクセルを変える */
+    background-repeat: repeat;  /* 画像の繰り返し */
+    background-position: center top; /* 画像のポジション */
+}
+
+/* マウスカーソルの形をポインターにする */
+a,button,:where([type="checkbox"],[type="radio"],[type="submit"],[type="reset"],[type="button"],select,optgroup,option,label:has([type="checkbox"],[type="radio"]),summary) {
+    cursor: pointer;
+}
+
+/* リンク */
+:where(a) {
+	text-decoration: underline;
+	color: var(--link-color);
+}
+
+/* 訪問済みリンク */
+:where(a:visited) {
+	color: var(--link-visited-color);
+}
+
+/* ホバー・アクティブのときのリンク */
+:where(a:is(:hover, :active)) {
+	opacity: 0.5;
+}
+
+/* 画像リンクのとき、text-decoration: underline;を消す */
+:where(a:has(img)) {
+    text-decoration: none;
+}
+
+/* ヘッダー */
+header,
+nav,
+main,
+footer{
+    width: calc(100% - calc(1em * 2));    /* 左右1emの隙間を作っている */
+    max-width: 1000px;  /* header,nav,main,footerの最大幅 */
+}
+
+header {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;    /* display: flex; と align-items: center; と justify-content: center;によって上下中央寄せにしている */
+    height: max(50vh, 15em);    /* svh が非対応の際のフォールバック */
+    height: max(50svh, 15em);   /* 高さは50svh、ただし15em以上 という指定にしている */
+    background-color: var(--background-color);
+}
+
+header span{
+    color: var(--button-border-color);
+}
+
+
+h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+
+main,
+nav,
+nav p {
+    margin: 0 auto;
+}
+
+
+main {
+    padding: 12em 0 0;
+}
+
+article,
+footer {
+    background-color: var(--background-color);
+    margin: 0 auto 12em;
+    padding: 4em 2em;
+}
+
+article > div,
+footer > div {
+    margin: 0 auto;
+    max-width: 652px;
+}
+
+nav,
+article,
+footer{
+    border-radius: 8px; /* 角丸にする */
+}
+
+nav {
+    transition: 0.5s;
+    background-color: var(--background-color);
+    position: -webkit-sticky;
+    position: sticky;    /* スクロールしたら上部に固定 */
+    z-index: 99;
+    top: 0;
+    border: 0;
+    border-top-right-radius: 0; /* 上部の左右頂点は角丸にしない */
+    border-top-left-radius: 0;
+}
+
+nav p {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav p a {
+    display: block;
+    padding: 0.7em 0;
+    text-decoration: none;
+    color: var(--text-color);
+    letter-spacing: 0.1em;
+    width: 100%;
+}
+
+/* スクロールしたら nav の下線を消して影をつけるクラスを付与 */
+.fix-nav {
+    background-color: var(--nav-background-color);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    box-shadow: 0px 3px 10px 0px var(--nav-shadow-color);
+}
+
+/* トップへ戻るボタンのデザインここから */
+#top {
+    z-index: 99;
+}
+
+#top a {
+    font-weight: bold;
+    position: fixed;
+    display: block;
+    width: 3em;
+    height: 3em;
+    right: 3%;
+    bottom: 3%;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    text-decoration: none;
+}
+
+#top a::before {
+    position: absolute;
+    content: '';
+    width: 1em;
+    height: 1em;
+    border-top: 3px solid var(--white);
+    border-right: 3px solid var(--white);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -25%) rotate(-45deg);
+}
+
+/* トップへ戻るボタンのデザインここまで */
+
+h1,h2,h3,h4,h5,h6 {
+    letter-spacing: 0.1em;
+}
+
+/* 見出しタグ */
+h2 {
+    font-size: calc(1em + 2px);
+}
+
+h3 {
+    font-size: calc(1em + 2px);
+}
+
+h4 {
+    font-size: calc(1em + 1px);
+}
+
+h5 {
+    font-size: calc(1em + 1px);
+}
+
+h2 {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    margin: 8em 0 2em;
+}
+
+h2::before,h2::after {
+    content: '';
+    height: 1px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: var(--button-border-color);
+    flex-grow: 1;
+}
+
+h2::before {
+    margin-right: 1em;
+}
+
+h2::after {
+    margin-left: 1em;
+}
+
+.h2__2::before,.h2__2::after {
+    border-top-color: var(--hr-border-color);
+}
+
+.h2__border-style-none::before,.h2__border-style-none::after {
+    border-top-style: none;
+}
+
+/****************************************/
+/* hタグなどでmargin-topをゼロにしたいときに使用 */
+.margin-top-zero {
+    margin-top: 0 !important;
+}
+
+/****************************************/
+/* h3,h4,h5,h6 タグの border-color */
+.h__border-c--main-color {
+    border-color: var(--main-color);
+}
+
+.h__border-c--main-color-t {
+    border-color: var(--main-color-t);
+}
+
+.h__border-c--text-color {
+    border-color: var(--text-color);
+}
+
+.h__border-c--hr-border-color {
+    border-color: var(--hr-border-color);
+}
+
+.h__border-c--white {
+    border-color: var(--white);
+}
+
+/****************************************/
+/* h3,h4,h5,h6 タグの background-color */
+.h__bg-c--main-color {
+    background-color: var(--main-color);
+    color: var(--white);
+}
+
+.h__bg-c--main-color-t {
+    background-color: var(--main-color-t);
+    color: var(--text-color);
+}
+
+.h__bg-c--text-color {
+    background-color: var(--text-color);
+    color: var(--white);
+}
+
+.h__bg-c--hr-border-color {
+    background-color: var(--hr-border-color);
+    color: var(--white);
+}
+
+.h__bg-c--gray {
+    background-color: var(--gray);
+    color: var(--text-color);
+}
+
+
+/****************************************/
+h3 {
+    font-weight: bold;
+    margin: 5em 0 1.5em;
+    padding: 0.1em 0;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+.h3__border-style-dashed {
+    border-bottom-style: dashed;
+}
+
+.h3__border-style-double {
+    border-bottom-style: double;
+    border-bottom-width: 3px;
+}
+
+h4 {
+    font-weight: bold;
+    margin: 5em 0 1.5em;
+    padding: 0.1em 0.8em;
+    border-left-style: double;
+    border-left-width: 8px;
+    border-left-color: var(--text-color);
+}
+
+.h4__border-style-solid {
+    border-left-style: solid;
+    border-left-width: 5px;
+}
+
+h5 {
+    font-weight: bold;
+    background-color: var(--gray);
+    margin: 5em 0 1.5em;
+    padding: 0.4em 0.8em;
+    border-left-style: solid;
+    border-left-width: 5px;
+    border-left-color: var(--main-color);
+}
+
+.h5__border-style-none {
+    border-left-style: none;
+}
+
+h6 {
+    width: fit-content;
+    margin: 4em 0 0.5em;
+    padding: 0.1em 0.75em;
+    color: var(--white);
+    background-color: var(--main-color);
+}
+
+.h6__border-style-solid {
+    border-style: solid;
+    border-width: 1px;
+}
+
+.h6__border-style-double {
+    border-style: double;
+    border-width: 4px;
+}
+
+.h6__2 {
+	color: var(--text-color);
+	background-color: unset;
+	border-color: var(--text-color);
+}
+
+.h6__3 {
+	color: var(--text-color);
+	background-color: unset;
+	border-color: var(--text-color);
+	border-width: 3px;
+}
+
+/****************************************/
+
+:where(em, strong, small, s, cite, q, dfn, abbr, data, time, code, var, samp, kbd, sub, sup, i, b, u, mark, ruby, rb, rt, rtc, rp, bdi, bdo, span, br, wbr, ins, del) {
+    all: revert;
+    box-sizing: border-box;
+}
+
+/* :where(center){ text-align: revert;}は
+nanoやalice+で center タグを使っている場合は必要。不要なら削除 */
+:where(center) {
+    text-align: revert;
+}
+
+em {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+}
+
+strong {
+    color: var(--red);
+}
+
+mark {
+    color: unset;
+    background: linear-gradient(transparent 40%, var(--main-color-t) 0%);
+}
+
+.mark-2 {
+    background: linear-gradient(transparent 40%, var(--gray) 0%);
+}
+
+.span-left-border {
+    margin-right: 0.75em;
+    padding-right: 0.75em;
+    border-right: solid 4px var(--main-color-t);
+}
+
+.span-left-border-2 {
+    border-right-color: var(--main-color);
+}
+
+.span-left-border-3 {
+    border-right-color: var(--text-color);
+}
+
+.span-left-border-4 {
+    border-right-color: var(--hr-border-color);
+}
+
+.kenten-1 {
+    text-emphasis-style: dot filled;
+}
+
+.kenten-2 {
+    text-emphasis-style: dot open;
+}
+
+.kenten-3 {
+    text-emphasis-style: sesame filled;
+}
+
+.kenten-4 {
+    text-emphasis-style: sesame open;
+}
+
+
+/* 区切り線 */
+hr {
+    height: 1px;
+    border-top: solid 1px var(--hr-border-color);
+    margin: 1.5em 0;
+}
+
+.hr-2 {
+    border-top-color: var(--button-border-color);
+}
+
+/* dl, dt, dd */
+/* dl 基本的にはdt・ddが縦並び */
+
+dt{
+    font-weight: bold;
+}
+
+/* dlでdt・ddが横並び */
+.dl-yoko {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.dl-yoko dt {
+    margin-top: 0;
+    padding-right: 1.25em;
+}
+
+/* dlでdt・ddが横並び・区切り線あり */
+.dl-yoko-line :is(dt, dd) {
+    margin-top: 1.5em;
+    padding-bottom: 1.5em;
+    border-bottom: solid 1px var(--hr-border-color);
+}
+
+.dl-yoko-line :is(dt, dd):first-of-type {
+    padding-top: 1.5em;
+    border-top: solid 1px var(--hr-border-color);
+}
+
+/* dlでdt・ddが縦並び・区切り線あり */
+.dl-tate-line dt {
+    padding-top: 1.5em;
+}
+
+.dl-tate-line dt:first-child {
+    margin-top: 1.5em;
+    border-top: solid 1px var(--hr-border-color);
+}
+
+.dl-tate-line dd {
+    padding-bottom: 1.5em;
+    border-bottom: solid 1px var(--hr-border-color);
+}
+
+/* テキストの寄せ方 */
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.justify {
+    text-align: justify;
+}
+
+ul {
+    padding-left: 1.5em;
+}
+
+ol {
+    padding-left: 2em;
+}
+
+.list-style-position-inside {
+    list-style-position: inside;
+}
+
+.disc {
+    list-style-type: disc;
+}
+
+.circle {
+    list-style-type: circle;
+}
+
+.square {
+    list-style-type: square;
+}
+
+.disclosure-closed {
+    list-style-type: disclosure-closed;
+}
+
+.disclosure-open {
+    list-style-type: disclosure-open;
+}
+
+.moji-ninni-1 {
+    list-style-type: "★ ";
+}
+
+.list-style-type-none {
+    padding-left: 0;
+}
+
+.decimal {
+    list-style-type: decimal;
+}
+
+.decimal-leading-zero {
+    list-style-type: decimal-leading-zero;
+}
+
+.lower-latin {
+    list-style-type: lower-latin;
+}
+
+.upper-latin {
+    list-style-type: upper-latin;
+}
+
+.lower-roman {
+    list-style-type: lower-roman;
+}
+
+.upper-roman {
+    list-style-type: upper-roman;
+}
+
+.lower-greek {
+    list-style-type: lower-greek;
+}
+
+.hiragana {
+    list-style-type: hiragana;
+}
+
+.katakana {
+    list-style-type: katakana;
+}
+
+.hiragana-iroha {
+    list-style-type: hiragana-iroha;
+}
+
+.katakana-iroha {
+    list-style-type: katakana-iroha;
+}
+
+.japanese-informal {
+    list-style-type: japanese-informal;
+}
+
+.japanese-formal {
+    list-style-type: japanese-formal;
+}
+
+/* 表 */
+th,td {
+	padding: 0.25em 1.25em;
+	border: solid 1px var(--text-color);
+}
+
+/* 色付きの表 */
+.table-color th {
+    background-color: var(--main-color-t);
+}
+
+/* スクロールする表 */
+.table-scroll {
+    display: block;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+/* ボックス */
+.box {
+    border: solid 1px var(--hr-border-color);
+    margin: 4em auto;
+    padding: 1em;
+}
+
+.box-2 {
+    border: solid 1px var(--button-border-color);
+}
+
+.copy-box {
+    margin: 0.5em auto;
+    width: 100%;
+}
+
+summary {
+    list-style: revert;
+    text-decoration: underline;
+}
+
+details[open] summary {
+    text-decoration: none;
+}
+
+/* 簡易的な画像表示 */
+.list-img {
+    display: grid;
+    gap: 2em;
+}
+
+.list-img figure {
+    background-color: var(--white);
+    box-shadow: 5px 5px 10px 0px var(--nav-shadow-color);
+    width: 100%;    /* グリッドアイテムの幅を100%に設定 */
+}
+
+.list-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* 画像を切り抜く */
+}
+
+/* スマホなど画面幅が小さいとき */
+/* キャプションありのとき */
+.figure-caption {
+    grid-template-columns: repeat(1, 1fr);    /* 画面幅が小さいときは1列 */
+}
+
+.figure-caption figure {
+    padding: 2em;
+}
+
+.figure-caption figure p {
+    aspect-ratio: 4 / 3;    /* 画像を表示する際の比率。4:3にしている */
+}
+
+.figure-caption figcaption {
+    /* キャプション */
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 1.5em auto 0;
+}
+
+/* キャプションなしのとき */
+.figure-no-caption {
+    grid-template-columns: repeat(2, 1fr);    /* 画面幅が小さいときは2列 */
+}
+
+.figure-no-caption figure {
+    padding: 0;
+    aspect-ratio: 1 / 1;    /* 画像を表示する際の比率。1:1の正方形にしている */
+}
+
+/* パソコンなど画面幅が大きいときの設定 */
+@media screen and (min-width: 700px) {
+
+    /* キャプションありのとき */
+    .figure-caption {
+        grid-template-columns: repeat(3, 1fr);  /* 画面幅が大きいときは3列 */
+    }
+
+    .figure-caption figure {
+        padding: 1em;
+    }
+
+    .figure-caption figcaption {
+        margin-top: 1em;
+    }
+
+    /* キャプションなしのとき */
+    .figure-no-caption {
+        grid-template-columns: repeat(4, 1fr);  /* 画面幅が大きいときは4列 */
+    }
+}
+
+
+
+/* フォーム系 */
+/* プレースホルダー */
+::placeholder {
+    opacity: 0.3;
+}
+
+form {
+    margin: 1em auto
+}
+
+input, button, select {
+    margin-right: var(--margin-right);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    vertical-align: middle;
+    height: var(--height);
+    width: var(--width-set);
+    align-items: revert;
+}
+
+input, button, select, textarea {
+    background-color: var(--white);
+    border: solid 1px var(--button-border-color);
+    border-radius: 4px;
+}
+
+textarea {
+    resize: both;
+    line-height: 1.5;
+    width: 100%;
+    padding: 0.5em;
+}
+
+select {
+    -webkit-appearance: revert;
+    appearance: revert;
+    width: revert;
+    min-width: var(--width-set);
+}
+
+:where(input, button):last-child {
+	margin-right: 0;
+}
+
+/* フォーカスされたとき */
+:is(input, button, select, textarea):focus {
+	outline: solid 1px var(--button-border-color);
+}
+
+/* ボタン系 */
+[type="submit"], [type="reset"], [type="button"], button {
+	text-align: center;
+	padding-left: 1em;
+	padding-right: 1em;
+	color: var(--white);
+	background-color: var(--main-color);
+	border: 0;
+	border-radius: 4px;
+	width: unset;
+}
+
+/* フォーカスされたとき */
+:is([type="submit"], [type="reset"], [type="button"], button):is(:hover, :active, :focus) {
+	outline: unset;
+	opacity: 0.5;
+}
+
+:is([type="submit"], [type="reset"], [type="button"], button):focus-visible {
+	outline: revert;
+	outline-offset: 2px;
+	opacity: unset;
+}
+
+/* その他の特別なinput要素 */
+[type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="image"] {
+	all: revert;
+	font: unset;
+	margin: unset;
+	padding: unset;
+	vertical-align: middle;
+	accent-color: var(--main-color);
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+/* フォーカスされたとき */
+:is([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="image"]):is(:hover, :active, :focus) {
+	outline: revert;
+}
+
+/* チェックボックスとラジオボタン */
+[type="checkbox"], [type="radio"] {
+    height: 1.25em;
+    width: 1.25em;
+    margin-right: var(--margin-right);
+}
+
+.checkbox-tate label,.radio-tate label {
+    display: block;
+    margin-bottom: var(--margin-right);
+}
+
+.checkbox-yoko label,.radio-yoko label {
+    margin-right: 3em;
+}
+
+[type="color"] {
+    padding: revert;
+}
+
+[type="file"] {
+    width: revert;
+}
+
+[type="image"] {
+    max-width: var(--width-set);
+}
+
+.ninni,.hissu {
+    font-size: 0.85em;
+    margin-left: 0.85em;
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+}
+
+.ninni {
+    background-color: var(--gray);
+}
+
+.hissu {
+    color: var(--red);
+}
+
+.hissu::before {
+    content: '* ';
+}
+
+form p {
+    margin-bottom: 2em;
+}
+
+/* 幅いっぱいに広げる */
+.all-full {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.all-full input:not([type="checkbox"], [type="radio"]),.all-full button,.all-full select {
+    flex: 1;    /* buttonにも適用 */
+}
+
+.all-full input:last-child,.all-full button:last-child,.all-full select:last-child {
+    margin-right: 0;
+}
+
+/* 入力欄だけ伸びる・ボタン系は伸びない */
+.flex-grow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-grow input:not([type="checkbox"], [type="radio"], [type="submit"], [type="reset"], [type="button"]),.flex-grow select {
+    flex-grow: 1;    /* ボタン系は伸びない */
+}
+
+/* センター寄せ */
+.justify-content-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 2段にしたいとき */
+.stack {
+    margin-bottom: var(--margin-right);
+}
+
+/* inputのテキスト入力の入力欄の長さ調整 */
+@media screen and (max-width: 700px) {
+    .input-short input:not([type="checkbox"], [type="radio"], [type="submit"], [type="reset"], [type="button"]) {
+        width: calc(var(--width-set) * 0.7);
+    }
+}
+
+.input-very-short input:not([type="checkbox"], [type="radio"], [type="submit"], [type="reset"], [type="button"]) {
+    width: var(--height);
+}
+
+
+/* フッター */
+footer {
+    color: var(--white);
+    background-color: var(--main-color);
+    margin-bottom: 0;
+    padding: 2em;
+    border-bottom-right-radius: 0;  /* 下部の左右頂点は角丸にしない */
+    border-bottom-left-radius: 0;
+}
+
+footer p {
+    font-size: 2em;
+    padding: 2em 0;
+}
+
+footer a {
+    color: var(--white);
+}
+
+
+
+/* 以下は要素の展示用に使用したものです。テンプレート使用時は削除してください */
+.h__margin-top-zero :is(h2, h3, h4, h5, h6) {
+    margin-top: 1em;
+}
+
+.tenji-you dt {
+    padding: 1em 2em 1em 0;
+}
+
+.tenji-you form {
+    margin-bottom: 0;
+}
+
+.tenji-you p {
+    margin: 0;
+}
