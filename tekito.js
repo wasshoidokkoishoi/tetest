@@ -1,4 +1,4 @@
-//document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("load", function() {
   const links = document.querySelectorAll('a[href^="#"]');
   links.forEach(function(link) {
     link.addEventListener("click", function(event) {
@@ -35,7 +35,7 @@
       topBtn.style.display = "none";
     }
   });
-//});
+});
 
 /* nav にクラスを付与するscript */
 window.addEventListener("scroll", function() {
